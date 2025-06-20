@@ -165,7 +165,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {filteredNavigation.map((item) => (
+              {filteredNavigation.map((item, index) => (
                 <SidebarMenuItem key={item.title}>
                   {item.items ? (
                     <Collapsible defaultOpen={pathname.startsWith(item.items[0]?.url.split("/")[1] || "")}>
@@ -178,8 +178,8 @@ export function AppSidebar() {
                       </CollapsibleTrigger>
                       <CollapsibleContent>
                         <SidebarMenuSub>
-                          {item.items?.map((subItem, index) => (
-                            <SidebarMenuSubItem key={`${subItem.url}-${index}`}>
+                          {item.items?.map((subItem, subIndex) => (
+                            <SidebarMenuSubItem key={`${subItem.url}-${subIndex}`}>
                               <SidebarMenuSubButton asChild isActive={pathname === subItem.url}>
                                 <Link href={subItem.url}>
                                   <span>{subItem.title}</span>

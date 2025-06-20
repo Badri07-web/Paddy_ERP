@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Checkbox } from '@/components/ui/checkbox'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Eye, EyeOff, Grain, AlertCircle, Wifi, WifiOff } from 'lucide-react'
+import { Eye, EyeOff, Wheat, AlertCircle, Wifi, WifiOff } from 'lucide-react'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -87,7 +87,7 @@ export default function LoginPage() {
         <CardHeader className="space-y-1 text-center">
           <div className="flex justify-center mb-4">
             <div className="p-3 bg-green-100 rounded-full">
-              <Grain className="h-8 w-8 text-green-600" />
+              <Wheat className="h-8 w-8 text-green-600" />
             </div>
           </div>
           <CardTitle className="text-2xl font-bold">Rice Mill ERP</CardTitle>
