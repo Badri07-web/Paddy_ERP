@@ -1,153 +1,145 @@
-"use client"
+'use client'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Truck, Fuel, DollarSign, Route, Clock, AlertTriangle, TrendingUp, Navigation } from "lucide-react"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts"
-
-const fleetData = [
-  { type: "Own Trucks", count: 12, active: 10, maintenance: 2, utilization: 83 },
-  { type: "Third-party", count: 8, active: 6, maintenance: 0, utilization: 75 },
-]
-
-const fuelConsumptionData = [
-  { day: "Mon", ownTrucks: 450, thirdParty: 320 },
-  { day: "Tue", ownTrucks: 520, thirdParty: 380 },
-  { day: "Wed", ownTrucks: 480, thirdParty: 340 },
-  { day: "Thu", ownTrucks: 580, thirdParty: 420 },
-  { day: "Fri", ownTrucks: 610, thirdParty: 450 },
-  { day: "Sat", ownTrucks: 490, thirdParty: 360 },
-  { day: "Sun", ownTrucks: 380, thirdParty: 280 },
-]
-
-const costAnalysisData = [
-  { category: "Fuel", ownTruck: 12500, thirdParty: 18200 },
-  { category: "Maintenance", ownTruck: 3200, thirdParty: 0 },
-  { category: "Driver Wages", ownTruck: 8500, thirdParty: 0 },
-  { category: "Insurance", ownTruck: 2100, thirdParty: 0 },
-  { category: "Service Charges", ownTruck: 0, thirdParty: 15600 },
-]
-
-const routeOptimizationData = [
-  { route: "Punjab-Mill", distance: 245, time: 4.5, fuel: 35, cost: 2800, trips: 12 },
-  { route: "Haryana-Mill", distance: 180, time: 3.2, fuel: 28, cost: 2200, trips: 8 },
-  { route: "UP-Mill", distance: 320, time: 5.8, fuel: 45, cost: 3600, trips: 6 },
-  { route: "Rajasthan-Mill", distance: 280, time: 5.1, fuel: 40, cost: 3200, trips: 4 },
-]
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Truck, MapPin, Clock, Fuel, Route, TrendingUp, AlertTriangle, CheckCircle } from "lucide-react"
 
 const activeTrips = [
   {
-    tripId: "TRP-001",
-    truck: "PB-01-AB-1234",
+    id: "TRIP-001",
+    vehicle: "PB-01-AB-1234",
     driver: "Rajesh Kumar",
-    route: "Punjab Mandi #1 → Mill",
+    route: "Punjab → Mill",
+    cargo: "Basmati Paddy - 25 MT",
     status: "In Transit",
     progress: 65,
-    eta: "14:30",
-    doNumbers: ["DO-2024-089", "DO-2024-090"],
+    eta: "2:30 PM",
+    distance: 245,
+    fuelLevel: 75
   },
   {
-    tripId: "TRP-002",
-    truck: "HR-02-CD-5678",
+    id: "TRIP-002",
+    vehicle: "HR-02-CD-5678",
     driver: "Suresh Singh",
-    route: "Haryana Mandi #2 → Mill",
+    route: "Mill → Delhi",
+    cargo: "Premium Rice - 18 MT",
     status: "Loading",
-    progress: 25,
-    eta: "16:45",
-    doNumbers: ["DO-2024-091"],
+    progress: 15,
+    eta: "5:45 PM",
+    distance: 320,
+    fuelLevel: 90
   },
   {
-    tripId: "TRP-003",
-    truck: "UP-03-EF-9012",
-    driver: "Mohan Lal",
-    route: "UP Mandi #3 → Mill",
-    status: "Completed",
-    progress: 100,
-    eta: "Arrived",
-    doNumbers: ["DO-2024-088"],
-  },
+    id: "TRIP-003",
+    vehicle: "UP-03-EF-9012",
+    driver: "Vikram Yadav",
+    route: "Haryana → Mill",
+    cargo: "Regular Paddy - 30 MT",
+    status: "Departed",
+    progress: 25,
+    eta: "6:15 PM",
+    distance: 180,
+    fuelLevel: 85
+  }
 ]
 
-export default function TransportationDashboard() {
-  const getStatusBadge = (status: string) => {
+const fleetStatus = [
+  {
+    vehicle: "PB-01-AB-1234",
+    type: "Heavy Truck",
+    capacity: "25 MT",
+    status: "Active",
+    location: "Highway NH-1",
+    fuel: 75,
+    lastMaintenance: "2024-02-15",
+    nextService: "2024-04-15"
+  },
+  {
+    vehicle: "HR-02-CD-5678",
+    type: "Medium Truck",
+    capacity: "18 MT",
+    status: "Loading",
+    location: "Mill Gate 2",
+    fuel: 90,
+    lastMaintenance: "2024-03-01",
+    nextService: "2024-05-01"
+  },
+  {
+    vehicle: "UP-03-EF-9012",
+    type: "Heavy Truck",
+    capacity: "30 MT",
+    status: "Active",
+    location: "Haryana Border",
+    fuel: 85,
+    lastMaintenance: "2024-01-20",
+    nextService: "2024-03-20"
+  },
+  {
+    vehicle: "RJ-04-GH-3456",
+    type: "Light Truck",
+    capacity: "12 MT",
+    status: "Maintenance",
+    location: "Service Center",
+    fuel: 45,
+    lastMaintenance: "2024-03-18",
+    nextService: "2024-03-25"
+  }
+]
+
+export default function TransportationPage() {
+  const getStatusColor = (status: string) => {
     switch (status) {
-      case "In Transit":
-        return <Badge className="bg-blue-100 text-blue-800">In Transit</Badge>
-      case "Loading":
-        return <Badge className="bg-yellow-100 text-yellow-800">Loading</Badge>
-      case "Completed":
-        return <Badge className="bg-green-100 text-green-800">Completed</Badge>
-      case "Delayed":
-        return <Badge className="bg-red-100 text-red-800">Delayed</Badge>
+      case 'Active':
+      case 'In Transit':
+      case 'Departed':
+        return 'bg-green-100 text-green-800'
+      case 'Loading':
+        return 'bg-blue-100 text-blue-800'
+      case 'Maintenance':
+        return 'bg-yellow-100 text-yellow-800'
       default:
-        return <Badge variant="outline">{status}</Badge>
+        return 'bg-gray-100 text-gray-800'
     }
   }
 
+  const getFuelColor = (level: number) => {
+    if (level > 70) return 'text-green-600'
+    if (level > 30) return 'text-yellow-600'
+    return 'text-red-600'
+  }
+
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Transportation Dashboard</h1>
-          <p className="text-muted-foreground">Fleet management and route optimization</p>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline">
+    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
+      <div className="flex items-center justify-between space-y-2">
+        <h2 className="text-3xl font-bold tracking-tight">Transportation Dashboard</h2>
+        <div className="flex items-center space-x-2">
+          <Button variant="outline" size="sm">
             <Route className="h-4 w-4 mr-2" />
-            Optimize Routes
+            Plan Route
           </Button>
-          <Button variant="outline">
-            <Navigation className="h-4 w-4 mr-2" />
-            Live Tracking
-          </Button>
-          <Button>
+          <Button size="sm">
             <Truck className="h-4 w-4 mr-2" />
             Schedule Trip
           </Button>
         </div>
       </div>
 
-      {/* Fleet Overview KPIs */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Fleet</CardTitle>
+            <CardTitle className="text-sm font-medium">Active Trips</CardTitle>
             <Truck className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">20</div>
-            <p className="text-xs text-muted-foreground">12 own + 8 third-party</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Trips</CardTitle>
-            <Route className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{activeTrips.filter((trip) => trip.status !== "Completed").length}</div>
-            <p className="text-xs text-muted-foreground">
-              {activeTrips.filter((trip) => trip.status === "In Transit").length} in transit
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Fuel Consumption</CardTitle>
-            <Fuel className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">1,240L</div>
+            <div className="text-2xl font-bold">12</div>
             <p className="text-xs text-muted-foreground">
               <span className="text-green-600 flex items-center">
                 <TrendingUp className="h-3 w-3 mr-1" />
-                -8% from last week
+                +3 from yesterday
               </span>
             </p>
           </CardContent>
@@ -155,334 +147,202 @@ export default function TransportationDashboard() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Transportation Cost</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Fleet Utilization</CardTitle>
+            <Route className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">₹85,400</div>
-            <p className="text-xs text-muted-foreground">This week</p>
+            <div className="text-2xl font-bold">78%</div>
+            <p className="text-xs text-muted-foreground">
+              18 of 23 vehicles active
+            </p>
+            <Progress value={78} className="mt-2" />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Avg Fuel Efficiency</CardTitle>
+            <Fuel className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">12.5 km/L</div>
+            <p className="text-xs text-muted-foreground">
+              This month average
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">On-Time Delivery</CardTitle>
+            <Clock className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">94.2%</div>
+            <p className="text-xs text-muted-foreground">
+              <span className="text-green-600 flex items-center">
+                <CheckCircle className="h-3 w-3 mr-1" />
+                +2.1% this month
+              </span>
+            </p>
           </CardContent>
         </Card>
       </div>
 
-      <Tabs defaultValue="overview" className="space-y-4">
+      <Tabs defaultValue="active-trips" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="fleet">Fleet Status</TabsTrigger>
-          <TabsTrigger value="routes">Route Optimization</TabsTrigger>
-          <TabsTrigger value="costs">Cost Analysis</TabsTrigger>
+          <TabsTrigger value="active-trips">Active Trips</TabsTrigger>
+          <TabsTrigger value="fleet-status">Fleet Status</TabsTrigger>
+          <TabsTrigger value="route-optimization">Route Optimization</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Fleet Utilization</CardTitle>
-                <CardDescription>Own trucks vs third-party utilization</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {fleetData.map((fleet, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span>{fleet.type}</span>
-                        <span>
-                          {fleet.active}/{fleet.count} active ({fleet.utilization}%)
-                        </span>
-                      </div>
-                      <Progress value={fleet.utilization} />
-                    </div>
+        <TabsContent value="active-trips" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Live Trip Tracking</CardTitle>
+              <CardDescription>Monitor ongoing transportation activities</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Trip ID</TableHead>
+                    <TableHead>Vehicle</TableHead>
+                    <TableHead>Driver</TableHead>
+                    <TableHead>Route</TableHead>
+                    <TableHead>Cargo</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Progress</TableHead>
+                    <TableHead>ETA</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {activeTrips.map((trip) => (
+                    <TableRow key={trip.id}>
+                      <TableCell className="font-medium">{trip.id}</TableCell>
+                      <TableCell>{trip.vehicle}</TableCell>
+                      <TableCell>{trip.driver}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center">
+                          <MapPin className="h-4 w-4 mr-1 text-gray-500" />
+                          {trip.route}
+                        </div>
+                      </TableCell>
+                      <TableCell>{trip.cargo}</TableCell>
+                      <TableCell>
+                        <Badge className={getStatusColor(trip.status)}>
+                          {trip.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center space-x-2">
+                          <Progress value={trip.progress} className="w-16" />
+                          <span className="text-sm">{trip.progress}%</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center">
+                          <Clock className="h-4 w-4 mr-1 text-gray-500" />
+                          {trip.eta}
+                        </div>
+                      </TableCell>
+                    </TableRow>
                   ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Daily Fuel Consumption</CardTitle>
-                <CardDescription>Fuel usage comparison over the week</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={200}>
-                  <BarChart data={fuelConsumptionData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="day" />
-                    <YAxis />
-                    <Tooltip formatter={(value) => `${value}L`} />
-                    <Bar dataKey="ownTrucks" fill="#10b981" name="Own Trucks" />
-                    <Bar dataKey="thirdParty" fill="#3b82f6" name="Third Party" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-          </div>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Active Trips</CardTitle>
-              <CardDescription>Real-time status of ongoing transportation</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {activeTrips.map((trip) => (
-                  <div key={trip.tripId} className="border rounded-lg p-4">
-                    <div className="flex justify-between items-start mb-3">
-                      <div>
-                        <h4 className="font-medium">{trip.tripId}</h4>
-                        <p className="text-sm text-muted-foreground">{trip.route}</p>
-                      </div>
-                      <div className="text-right">
-                        {getStatusBadge(trip.status)}
-                        <p className="text-sm text-muted-foreground mt-1">ETA: {trip.eta}</p>
-                      </div>
-                    </div>
-
-                    <div className="grid gap-3 md:grid-cols-3 mb-3">
-                      <div>
-                        <p className="text-sm text-muted-foreground">Truck</p>
-                        <p className="font-medium">{trip.truck}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-muted-foreground">Driver</p>
-                        <p className="font-medium">{trip.driver}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-muted-foreground">DOs</p>
-                        <p className="font-medium">{trip.doNumbers.join(", ")}</p>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span>Progress</span>
-                        <span>{trip.progress}%</span>
-                      </div>
-                      <Progress value={trip.progress} />
-                    </div>
-                  </div>
-                ))}
-              </div>
+                </TableBody>
+              </Table>
             </CardContent>
           </Card>
         </TabsContent>
 
-        <TabsContent value="fleet" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Own Fleet</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold">12</div>
-                <div className="space-y-2 mt-4">
-                  <div className="flex justify-between text-sm">
-                    <span>Active:</span>
-                    <span className="text-green-600">10</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Maintenance:</span>
-                    <span className="text-orange-600">2</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Utilization:</span>
-                    <span>83%</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Third-party</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold">8</div>
-                <div className="space-y-2 mt-4">
-                  <div className="flex justify-between text-sm">
-                    <span>Active:</span>
-                    <span className="text-green-600">6</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Available:</span>
-                    <span className="text-blue-600">2</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Utilization:</span>
-                    <span>75%</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Maintenance</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-orange-600">2</div>
-                <div className="space-y-2 mt-4">
-                  <div className="flex justify-between text-sm">
-                    <span>Scheduled:</span>
-                    <span>1</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Emergency:</span>
-                    <span>1</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Avg Downtime:</span>
-                    <span>2.5 days</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Performance</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-green-600">94%</div>
-                <div className="space-y-2 mt-4">
-                  <div className="flex justify-between text-sm">
-                    <span>On-time Delivery:</span>
-                    <span>96%</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Fuel Efficiency:</span>
-                    <span>12.5 km/L</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Driver Rating:</span>
-                    <span>4.7/5</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
+        <TabsContent value="fleet-status" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Fleet Alerts</CardTitle>
-              <CardDescription>Important notifications and maintenance alerts</CardDescription>
+              <CardTitle>Fleet Management</CardTitle>
+              <CardDescription>Monitor vehicle status and maintenance</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex items-center justify-between p-3 bg-red-50 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <AlertTriangle className="h-5 w-5 text-red-500" />
-                  <div>
-                    <p className="font-medium text-red-800">Emergency Maintenance Required</p>
-                    <p className="text-sm text-red-600">PB-05-GH-7890 - Engine overheating detected</p>
-                  </div>
-                </div>
-                <Badge variant="destructive">Critical</Badge>
-              </div>
-
-              <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <Clock className="h-5 w-5 text-orange-500" />
-                  <div>
-                    <p className="font-medium text-orange-800">Scheduled Maintenance Due</p>
-                    <p className="text-sm text-orange-600">HR-02-CD-5678 - Service due in 2 days</p>
-                  </div>
-                </div>
-                <Badge variant="secondary">Warning</Badge>
-              </div>
-
-              <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <Fuel className="h-5 w-5 text-yellow-500" />
-                  <div>
-                    <p className="font-medium text-yellow-800">Fuel Efficiency Alert</p>
-                    <p className="text-sm text-yellow-600">UP-03-EF-9012 - Below average fuel efficiency</p>
-                  </div>
-                </div>
-                <Badge variant="outline">Info</Badge>
-              </div>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Vehicle</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Capacity</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Location</TableHead>
+                    <TableHead>Fuel Level</TableHead>
+                    <TableHead>Last Service</TableHead>
+                    <TableHead>Next Service</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {fleetStatus.map((vehicle) => (
+                    <TableRow key={vehicle.vehicle}>
+                      <TableCell className="font-medium">{vehicle.vehicle}</TableCell>
+                      <TableCell>{vehicle.type}</TableCell>
+                      <TableCell>{vehicle.capacity}</TableCell>
+                      <TableCell>
+                        <Badge className={getStatusColor(vehicle.status)}>
+                          {vehicle.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center">
+                          <MapPin className="h-4 w-4 mr-1 text-gray-500" />
+                          {vehicle.location}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center space-x-2">
+                          <Fuel className={`h-4 w-4 ${getFuelColor(vehicle.fuel)}`} />
+                          <span className={getFuelColor(vehicle.fuel)}>{vehicle.fuel}%</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>{vehicle.lastMaintenance}</TableCell>
+                      <TableCell>
+                        {vehicle.status === 'Maintenance' ? (
+                          <Badge variant="outline" className="text-yellow-600">
+                            <AlertTriangle className="h-3 w-3 mr-1" />
+                            In Service
+                          </Badge>
+                        ) : (
+                          vehicle.nextService
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </CardContent>
           </Card>
         </TabsContent>
 
-        <TabsContent value="routes" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Route Optimization</CardTitle>
-              <CardDescription>Analyze and optimize transportation routes for efficiency</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                {routeOptimizationData.map((route, index) => (
-                  <div key={index} className="border rounded-lg p-4">
-                    <div className="flex justify-between items-start mb-3">
-                      <div>
-                        <h4 className="font-medium">{route.route}</h4>
-                        <p className="text-sm text-muted-foreground">{route.trips} trips this month</p>
-                      </div>
-                      <Button variant="outline" size="sm">
-                        <Route className="h-4 w-4 mr-1" />
-                        Optimize
-                      </Button>
-                    </div>
-
-                    <div className="grid gap-3 md:grid-cols-4">
-                      <div>
-                        <p className="text-sm text-muted-foreground">Distance</p>
-                        <p className="font-medium">{route.distance} km</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-muted-foreground">Time</p>
-                        <p className="font-medium">{route.time} hrs</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-muted-foreground">Fuel</p>
-                        <p className="font-medium">{route.fuel}L</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-muted-foreground">Cost</p>
-                        <p className="font-medium">₹{route.cost}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
+        <TabsContent value="route-optimization" className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>Traffic & Weather Integration</CardTitle>
+                <CardTitle>Route Efficiency</CardTitle>
+                <CardDescription>Most efficient routes based on distance and time</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="border rounded-lg p-3">
-                  <h4 className="font-medium mb-2">Current Conditions</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span>Punjab Route:</span>
-                      <Badge className="bg-green-100 text-green-800">Clear</Badge>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Haryana Route:</span>
-                      <Badge className="bg-yellow-100 text-yellow-800">Light Traffic</Badge>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>UP Route:</span>
-                      <Badge className="bg-red-100 text-red-800">Heavy Traffic</Badge>
-                    </div>
+                <div className="flex justify-between items-center">
+                  <span>Punjab → Mill (Highway)</span>
+                  <div className="text-right">
+                    <div className="font-medium">245 km</div>
+                    <div className="text-sm text-green-600">3.5 hrs</div>
                   </div>
                 </div>
-
-                <div className="border rounded-lg p-3">
-                  <h4 className="font-medium mb-2">Weather Alerts</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span>Rain Expected:</span>
-                      <span>Punjab (Evening)</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Fog Warning:</span>
-                      <span>UP (Morning)</span>
-                    </div>
+                <div className="flex justify-between items-center">
+                  <span>Haryana → Mill (Direct)</span>
+                  <div className="text-right">
+                    <div className="font-medium">180 km</div>
+                    <div className="text-sm text-green-600">2.8 hrs</div>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>UP → Mill (State Highway)</span>
+                  <div className="text-right">
+                    <div className="font-medium">320 km</div>
+                    <div className="text-sm text-yellow-600">4.5 hrs</div>
                   </div>
                 </div>
               </CardContent>
@@ -490,158 +350,30 @@ export default function TransportationDashboard() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Delivery Time Optimization</CardTitle>
+                <CardTitle>Cost Analysis</CardTitle>
+                <CardDescription>Transportation cost per route</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>On-time Delivery Rate</span>
-                      <span>96%</span>
-                    </div>
-                    <Progress value={96} />
-                  </div>
-
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>Average Delay</span>
-                      <span>15 minutes</span>
-                    </div>
-                    <Progress value={25} />
-                  </div>
-
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>Route Efficiency</span>
-                      <span>88%</span>
-                    </div>
-                    <Progress value={88} />
+                <div className="flex justify-between items-center">
+                  <span>Punjab Route</span>
+                  <div className="text-right">
+                    <div className="font-medium">₹128/MT</div>
+                    <div className="text-sm text-green-600">Most economical</div>
                   </div>
                 </div>
-
-                <Button className="w-full">
-                  <Navigation className="h-4 w-4 mr-2" />
-                  Optimize All Routes
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="costs" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Cost Comparison: Own vs Third-party</CardTitle>
-              <CardDescription>Detailed breakdown of transportation costs</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={costAnalysisData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="category" />
-                  <YAxis />
-                  <Tooltip formatter={(value) => `₹${value.toLocaleString()}`} />
-                  <Bar dataKey="ownTruck" fill="#10b981" name="Own Trucks" />
-                  <Bar dataKey="thirdParty" fill="#ef4444" name="Third Party" />
-                </BarChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Total Cost</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold">₹85,400</div>
-                <p className="text-sm text-muted-foreground">This week</p>
-                <div className="mt-2 text-sm">
-                  <span className="text-green-600">-12% from last week</span>
+                <div className="flex justify-between items-center">
+                  <span>Haryana Route</span>
+                  <div className="text-right">
+                    <div className="font-medium">₹142/MT</div>
+                    <div className="text-sm text-blue-600">Balanced</div>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Cost per MT</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold">₹142</div>
-                <p className="text-sm text-muted-foreground">Average cost</p>
-                <div className="mt-2 text-sm">
-                  <span className="text-green-600">-5% improvement</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Fuel Cost</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold">₹45,200</div>
-                <p className="text-sm text-muted-foreground">53% of total cost</p>
-                <div className="mt-2 text-sm">
-                  <span className="text-red-600">+8% from last week</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Savings</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-green-600">₹12,800</div>
-                <p className="text-sm text-muted-foreground">Own vs third-party</p>
-                <div className="mt-2 text-sm">
-                  <span className="text-green-600">15% cost reduction</span>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Monthly Cost Trend</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={200}>
-                  <LineChart data={fuelConsumptionData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="day" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="ownTrucks" stroke="#10b981" name="Own Trucks" />
-                    <Line type="monotone" dataKey="thirdParty" stroke="#ef4444" name="Third Party" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Cost Optimization Recommendations</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="border rounded-lg p-3">
-                  <h4 className="font-medium text-green-800">Route Consolidation</h4>
-                  <p className="text-sm text-muted-foreground">Combine Punjab routes</p>
-                  <p className="text-sm font-medium text-green-600">Save ₹8,500/month</p>
-                </div>
-
-                <div className="border rounded-lg p-3">
-                  <h4 className="font-medium text-blue-800">Fuel Efficiency</h4>
-                  <p className="text-sm text-muted-foreground">Driver training program</p>
-                  <p className="text-sm font-medium text-blue-600">Save ₹5,200/month</p>
-                </div>
-
-                <div className="border rounded-lg p-3">
-                  <h4 className="font-medium text-orange-800">Maintenance Schedule</h4>
-                  <p className="text-sm text-muted-foreground">Preventive maintenance</p>
-                  <p className="text-sm font-medium text-orange-600">Save ₹3,800/month</p>
+                <div className="flex justify-between items-center">
+                  <span>UP Route</span>
+                  <div className="text-right">
+                    <div className="font-medium">₹158/MT</div>
+                    <div className="text-sm text-yellow-600">Premium</div>
+                  </div>
                 </div>
               </CardContent>
             </Card>

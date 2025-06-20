@@ -1,37 +1,42 @@
 
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    // Simulate dashboard statistics
     const stats = {
       production: {
-        daily: 125.5,
-        monthly: 3750,
-        yearly: 45000,
-        efficiency: 92.3
+        dailyRiceProduction: 325,
+        yieldPercentage: 68.5,
+        activeDOs: 142,
+        monthlyRevenue: 24500000
       },
       inventory: {
-        rawMaterials: 2450,
-        finishedGoods: 1850,
-        byproducts: 560
+        rawMaterials: { stock: 2450, status: 'normal' },
+        finishedGoods: { stock: 1850, status: 'low' },
+        byproducts: { stock: 680, status: 'normal' }
       },
-      financial: {
-        revenue: 25500000,
-        expenses: 18200000,
-        profit: 7300000,
-        profitMargin: 28.6
+      finance: {
+        outstandingReceivables: 12000000,
+        pendingPayments: 8500000,
+        cashFlow: 4500000,
+        profitMargin: 18.5
       },
-      quality: {
-        averageGrade: 'A',
-        defectRate: 2.1,
-        customerSatisfaction: 96.8
+      operations: {
+        qualityScore: 94.2,
+        staffAttendance: 86,
+        machineEfficiency: 92.1,
+        activeTransportation: 12
       }
     }
-    
-    return NextResponse.json(stats)
+
+    return NextResponse.json({
+      success: true,
+      data: stats
+    })
   } catch (error) {
     return NextResponse.json(
-      { error: 'Failed to fetch dashboard stats' },
+      { success: false, message: 'Failed to fetch dashboard stats' },
       { status: 500 }
     )
   }

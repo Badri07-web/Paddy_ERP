@@ -166,7 +166,7 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {filteredNavigation.map((item, index) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem key={`${item.title}-${index}`}>
                   {item.items ? (
                     <Collapsible defaultOpen={pathname.startsWith(item.items[0]?.url.split("/")[1] || "")}>
                       <CollapsibleTrigger asChild>
