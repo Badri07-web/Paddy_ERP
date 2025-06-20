@@ -1,0 +1,888 @@
+Rice Mill ERP Website - Detailed Page Structure
+1. AUTHENTICATION & ACCESS CONTROL
+1.1 Login Page (/login)
+Username/Email input field
+
+Password input field with show/hide toggle
+
+"Remember Me" checkbox
+
+"Forgot Password" link
+
+Login button
+
+Company logo and branding
+
+Language selection dropdown
+
+System status indicator
+
+Enter credentials → Role validation → Redirect to appropriate dashboard
+
+1.2 Forgot Password Page (/forgot-password)
+Email input field
+
+Reset instructions
+
+Back to login link
+
+Security question option
+
+1.3 Role-Based Dashboard Redirect
+Admin → Full Dashboard Access
+
+Manager → Production & Financial Overview
+
+Operator → Production & Quality Control
+
+Accounts → Financial & Compliance Reports
+
+2. MAIN DASHBOARD
+2.1 Executive Dashboard (/dashboard)
+Production KPIs
+
+Daily rice production (MT)
+
+Yield percentage (Rice/Paddy ratio)
+
+Byproduct generation (Bran, Husk)
+
+Equipment utilization rate
+
+Financial Overview
+
+Daily revenue breakdown
+
+Transportation cost comparison chart
+
+Processing charge collections
+
+Byproduct sales revenue
+
+Procurement Status
+
+Active DOs count
+
+Pending paddy collection (MT)
+
+Government agreement compliance %
+
+Supplier payment status
+
+Operational Alerts
+
+Equipment maintenance due
+
+Quality failures
+
+Stock level warnings
+
+Payment delays
+
+Quick Actions Panel
+
+Create new DO
+
+Schedule transportation
+
+Generate reports
+
+Quality test entry
+
+2.2 Operational Dashboard (/dashboard/operations)
+Production line status
+
+Quality control checkpoints
+
+Equipment monitoring
+
+Daily production targets
+
+3. PADDY AGREEMENT MANAGEMENT
+3.1 Agreement Overview (/agreements)
+Agreement List Table
+
+Agreement ID and date
+
+Total quantity allocated
+
+DOs count
+
+Completion status
+
+MSP rate
+
+Validity period
+
+Filters & Search
+
+Date range picker
+
+Status filter (Active/Completed/Expired)
+
+Agreement type filter
+
+Search by ID/location
+
+Actions
+
+View agreement details
+
+Download agreement copy
+
+Sync with government portal
+
+Mark as completed
+
+3.2 Agreement Details Page (/agreements/{id})
+Agreement Information
+
+Government reference number
+
+Agreement date and validity
+
+Total paddy quantity
+
+MSP rate details
+
+Terms and conditions
+
+DO Breakdown Table
+
+DO number and date
+
+Pickup location with map
+
+Paddy variety
+
+Quantity allocated vs collected
+
+Collection deadline
+
+Status indicator
+
+Progress Tracking
+
+Overall completion percentage
+
+Timeline view of collections
+
+Remaining quantity breakdown
+
+Compliance status
+
+3.3 Government Portal Sync (/agreements/sync)
+Last sync timestamp
+
+Sync status indicators
+
+Manual sync trigger
+
+Error log display
+
+Data validation results
+
+4. DO (DELIVERY ORDER) MANAGEMENT
+4.1 DO Registry (/do-management)
+DO List Table
+
+DO number and date
+
+Pickup location
+
+Paddy type and grade
+
+Quantity (allocated/collected)
+
+Collection status
+
+Assigned truck/transporter
+
+Collection deadline
+
+Advanced Filters
+
+Location-based filter
+
+Status filter (Pending/In Transit/Collected/Completed)
+
+Date range filter
+
+Paddy variety filter
+
+Transporter filter
+
+Bulk Actions
+
+Assign multiple DOs to truck
+
+Generate collection routes
+
+Export DO list
+
+Print collection receipts
+
+4.2 DO Details Page (/do-management/{do-id})
+DO Information Card
+
+DO number and QR code
+
+Issue date and validity
+
+Pickup location with GPS coordinates
+
+Contact person details
+
+Paddy specifications (variety, grade, moisture)
+
+Collection Tracking
+
+Truck assignment details
+
+Driver information
+
+Route planning
+
+Real-time GPS tracking
+
+Collection timeline
+
+Documentation
+
+Collection receipt upload
+
+Quality test reports
+
+Weight verification documents
+
+Photo evidence
+
+4.3 DO Trading Platform (/do-trading)
+Trading Dashboard
+
+Available DOs for trading
+
+Market price trends
+
+Trading opportunities
+
+Recent transactions
+
+Trading Interface
+
+DO selection panel
+
+Price negotiation tools
+
+Buyer/seller profiles
+
+Transaction history
+
+Profit calculation
+
+5. TRANSPORTATION MANAGEMENT
+5.1 Transportation Dashboard (/transportation)
+Fleet Overview
+
+Own trucks status
+
+Available third-party transporters
+
+Active trips count
+
+Fuel consumption summary
+
+Cost Analysis Widget
+
+Own truck vs third-party cost comparison
+
+Per-trip cost breakdown
+
+Monthly transportation expenses
+
+ROI analysis charts
+
+Route Optimization
+
+Route planning interface
+
+Traffic and weather integration
+
+Fuel efficiency tracking
+
+Delivery time optimization
+
+5.2 Fleet Management (/transportation/fleet)
+Own Trucks Registry
+
+Vehicle details (model, year, capacity)
+
+Registration and insurance info
+
+Maintenance schedule
+
+Driver assignment
+
+Current location/status
+
+Maintenance Tracking
+
+Service history
+
+Upcoming maintenance alerts
+
+Repair cost tracking
+
+Downtime analysis
+
+5.3 Trip Management (/transportation/trips)
+Trip Planning Interface
+
+DO selection for trip
+
+Route optimization
+
+Driver assignment
+
+Fuel estimation
+
+Time planning
+
+Trip Tracking
+
+Real-time GPS tracking
+
+Delivery status updates
+
+Fuel consumption monitoring
+
+Driver performance tracking
+
+5.4 Cost Analysis (/transportation/analytics)
+Detailed Cost Breakdown
+
+Fuel costs per trip/km
+
+Driver wages and overtime
+
+Vehicle maintenance costs
+
+Insurance and registration
+
+Third-party transporter charges
+
+Profit Analysis
+
+Cost per quintal transportation
+
+Profit margin by route
+
+Seasonal cost variations
+
+Break-even analysis
+
+6. PRODUCTION MANAGEMENT
+6.1 Production Dashboard (/production)
+Production Line Status
+
+Current production rate
+
+Equipment status indicators
+
+Quality metrics
+
+Target vs actual production
+
+Process Flow Monitoring
+
+Paddy intake stage
+
+Cleaning and sorting
+
+Hulling process
+
+Polishing stage
+
+Grading and packaging
+
+6.2 Production Scheduling (/production/schedule)
+Production Calendar
+
+Daily production plans
+
+Paddy allocation schedule
+
+Equipment maintenance slots
+
+Quality testing schedule
+
+Capacity Planning
+
+Available paddy inventory
+
+Machine capacity utilization
+
+Labor shift planning
+
+Output forecasting
+
+6.3 Yield Tracking (/production/yield)
+Yield Analysis Dashboard
+
+Rice yield percentage
+
+Bran extraction rate
+
+Husk generation
+
+Broken rice percentage
+
+Quality grade distribution
+
+Historical Comparisons
+
+Yield trends over time
+
+Seasonal variations
+
+Paddy variety performance
+
+Process optimization insights
+
+6.4 Quality Control (/production/quality)
+Quality Testing Interface
+
+Moisture content testing
+
+Grain size analysis
+
+Color grading
+
+Foreign matter detection
+
+Broken grain percentage
+
+Quality Reports
+
+Daily quality summary
+
+Batch-wise quality tracking
+
+Non-conformance reports
+
+Customer complaints tracking
+
+7. INVENTORY MANAGEMENT
+7.1 Inventory Dashboard (/inventory)
+Stock Overview
+
+Raw paddy inventory by variety
+
+Finished rice inventory by grade
+
+Byproduct stock (bran, husk)
+
+Total stock value
+
+Stock Movement Tracking
+
+Recent transactions
+
+Stock in/out summary
+
+Inventory turnover ratios
+
+Stock aging analysis
+
+7.2 Raw Material Inventory (/inventory/raw-materials)
+Paddy Inventory Table
+
+Variety and grade
+
+Quantity in stock
+
+Location/warehouse
+
+Purchase date and batch
+
+Quality parameters
+
+Supplier information
+
+Stock Management Actions
+
+Stock adjustment entries
+
+Transfer between locations
+
+Quality re-grading
+
+Damage/wastage recording
+
+7.3 Finished Goods Inventory (/inventory/finished-goods)
+Rice Inventory Tracking
+
+Rice variety and grade
+
+Packaging details
+
+Production batch tracking
+
+Storage location
+
+Sale allocation
+
+Packaging Management
+
+Bag inventory tracking
+
+Packaging material stock
+
+Label and marking supplies
+
+Packaging cost tracking
+
+7.4 Byproducts Inventory (/inventory/byproducts)
+Byproduct Stock Management
+
+Bran inventory by quality
+
+Husk stock levels
+
+Broken rice inventory
+
+Market price tracking
+
+Buyer information
+
+8. SALES MANAGEMENT
+8.1 Sales Dashboard (/sales)
+Sales Overview
+
+Daily/monthly sales summary
+
+Government vs private sales
+
+Revenue breakdown by product
+
+Outstanding receivables
+
+Processing Charge Tracking
+
+Government processing rates
+
+Volume processed for government
+
+Processing charge collections
+
+Pending payments
+
+8.2 Government Sales (/sales/government)
+Government Orders Interface
+
+Processing orders from government
+
+Delivery schedule management
+
+Quality compliance tracking
+
+Payment status monitoring
+
+Processing Charge Calculation
+
+Automatic rate calculation
+
+Volume-based pricing
+
+Service charge breakdown
+
+Invoice generation
+
+8.3 Byproduct Sales (/sales/byproducts)
+Broker Management
+
+Broker profile and contact info
+
+Credit terms and payment history
+
+Product preferences
+
+Price negotiations
+
+Sales Order Management
+
+Order creation and tracking
+
+Delivery scheduling
+
+Quality specifications
+
+Payment terms
+
+8.4 Invoice Management (/sales/invoices)
+Invoice Generation
+
+Automated invoice creation
+
+GST calculation
+
+Multiple payment terms
+
+Electronic invoice dispatch
+
+Payment Tracking
+
+Outstanding invoice monitoring
+
+Payment reminder system
+
+Receipt reconciliation
+
+Customer aging analysis
+
+9. FINANCIAL MANAGEMENT
+9.1 Financial Dashboard (/finance)
+Financial Overview
+
+Daily cash flow
+
+Monthly P&L summary
+
+Outstanding receivables/payables
+
+Bank balance summary
+
+Key Financial Metrics
+
+Gross profit margins
+
+Transportation cost ratios
+
+Processing margins
+
+Working capital analysis
+
+9.2 Accounts Receivable (/finance/receivables)
+Customer Outstanding
+
+Government payment status
+
+Broker payment tracking
+
+Aging analysis
+
+Credit limit monitoring
+
+Collection Management
+
+Payment reminder system
+
+Collection call scheduling
+
+Payment plan tracking
+
+Bad debt provisions
+
+9.3 Accounts Payable (/finance/payables)
+Supplier Payments
+
+Farmer payment tracking
+
+Transporter payment status
+
+Utility and overhead payments
+
+Payment approval workflow
+
+Cash Flow Management
+
+Payment scheduling
+
+Cash flow forecasting
+
+Bank reconciliation
+
+Working capital optimization
+
+9.4 Cost Accounting (/finance/cost-accounting)
+Cost Center Analysis
+
+Production cost tracking
+
+Transportation cost allocation
+
+Overhead cost distribution
+
+Profit center reporting
+
+Profitability Analysis
+
+Product-wise profitability
+
+Customer profitability
+
+Transportation method ROI
+
+Seasonal profit analysis
+
+10. REPORTING & ANALYTICS
+10.1 Report Center (/reports)
+Pre-built Reports
+
+Daily production report
+
+Financial summary report
+
+Compliance reports
+
+Operational efficiency reports
+
+Custom Report Builder
+
+Drag-and-drop interface
+
+Data source selection
+
+Filter and grouping options
+
+Chart and table formatting
+
+10.2 Analytics Dashboard (/analytics)
+Business Intelligence
+
+Trend analysis charts
+
+Predictive analytics
+
+Benchmark comparisons
+
+Performance indicators
+
+Operational Analytics
+
+Production efficiency trends
+
+Quality performance metrics
+
+Transportation optimization insights
+
+Inventory optimization recommendations
+
+11. ADMINISTRATION
+11.1 User Management (/admin/users)
+User Registry
+
+User profile management
+
+Role assignment
+
+Permission management
+
+Active session monitoring
+
+Access Control
+
+Role-based permissions
+
+Feature access control
+
+Data access restrictions
+
+Audit trail tracking
+
+11.2 System Settings (/admin/settings)
+General Settings
+
+Company information
+
+System preferences
+
+Notification settings
+
+Integration configurations
+
+Master Data Management
+
+Paddy varieties
+
+Quality parameters
+
+Location master
+
+Rate master
+
+11.3 Audit & Compliance (/admin/audit)
+Audit Trail
+
+User activity logs
+
+Data modification tracking
+
+System access logs
+
+Error and exception logs
+
+Compliance Monitoring
+
+Regulatory compliance status
+
+Document management
+
+Approval workflows
+
+Risk assessment tracking
+
+NAVIGATION STRUCTURE
+Primary Navigation Menu
+
+Dashboard (Role-based landing page)
+
+Paddy Agreements → Agreements, DOs, Sync
+
+Transportation → Fleet, Trips, Cost Analysis
+
+Production → Dashboard, Schedule, Quality, Yield
+
+Inventory → Overview, Raw Materials, Finished Goods, Byproducts
+
+Sales → Dashboard, Government Sales, Byproduct Sales, Invoices
+
+Finance → Dashboard, Receivables, Payables, Cost Accounting
+
+Reports → Report Center, Analytics, Custom Reports
+
+Administration → Users, Settings, Audit (Admin only)
+
+Secondary Navigation (Breadcrumbs)
+
+Shows current page location within module hierarchy
+
+Allows quick navigation to parent pages
+
+Context-sensitive based on user's current location
+
+Mobile Navigation
+
+Collapsible hamburger menu
+
+Touch-optimized interface
+
+Essential features accessible in mobile view
+
+Responsive design for tablet and smartphone access
+
+USER ROLE ACCESS MATRIX
+Page/Feature	Admin	Manager	Operator	Accounts
+Dashboard (Full)	✓	✓	-	-
+Dashboard (Operational)	✓	✓	✓	-
+Dashboard (Financial)	✓	✓	-	✓
+Paddy Agreements	✓	✓	View Only	-
+DO Management	✓	✓	✓	-
+Transportation	✓	✓	View Only	View Only
+Production	✓	✓	✓	-
+Inventory	✓	✓	✓	View Only
+Sales	✓	✓	-	✓
+Finance	✓	✓	-	✓
+Reports	✓	✓	Limited	✓
+Administration	✓	-	-	-
+This comprehensive page structure ensures that all aspects of the rice mill operation are covered, from government paddy procurement to final sales and financial management, with appropriate role-based access controls and user-friendly navigation.
