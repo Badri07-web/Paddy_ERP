@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Checkbox } from '@/components/ui/checkbox'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Eye, EyeOff, Wheat, AlertCircle, Wifi, WifiOff } from 'lucide-react'
+import { AlertCircle, Eye, EyeOff, Wheat, Wifi, WifiOff } from 'lucide-react'
 
 export default function LoginPage() {
   const router = useRouter()
