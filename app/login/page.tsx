@@ -1,4 +1,3 @@
-
 'use client'
 
 import { useState } from 'react'
@@ -94,7 +93,7 @@ export default function LoginPage() {
           <CardDescription>
             Enter your credentials to access the system
           </CardDescription>
-          
+
           {/* System Status Indicator */}
           <div className="flex items-center justify-center space-x-2 text-sm">
             {systemStatus === 'online' ? (
@@ -110,7 +109,7 @@ export default function LoginPage() {
             )}
           </div>
         </CardHeader>
-        
+
         <CardContent className="space-y-4">
           {/* Language Selection */}
           <div className="space-y-2">

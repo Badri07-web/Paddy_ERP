@@ -339,19 +339,19 @@ export default function DashboardPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button>
+          <Button onClick={() => router.push('/do-management')}>
             <FileText className="h-4 w-4 mr-2" />
             Create New DO
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" onClick={() => router.push('/transportation')}>
             <Truck className="h-4 w-4 mr-2" />
             Schedule Transportation
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" onClick={() => router.push('/reports')}>
             <BarChart3 className="h-4 w-4 mr-2" />
             Generate Report
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" onClick={() => router.push('/production/quality')}>
             <CheckCircle className="h-4 w-4 mr-2" />
             Enter Quality Test
           </Button>
